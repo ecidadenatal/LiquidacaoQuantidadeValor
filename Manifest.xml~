@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <plugin name="LiquidacaoQuantidadeValor" label="Liquidacao Quantidade Valor" plugin-version="1.0" ecidade-version="2.3.39" id-modulo="116">
+   <id id="LiquidacaoQuantidadeValor"> </id>
+   <files>    
+
+    <!-- outro -->
+    <file name="LiquidacaoQuantidadeValor.xml" path="/modification/xml/LiquidacaoQuantidadeValor.xml" />
+
+   </files>
+  </plugin>
+</manifest>    
