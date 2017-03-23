@@ -6,38 +6,27 @@
   
   <file path='forms/db_frmliquidasemordem.php'>
     <operation>
-      <search><![CDATA[/* Plugin [LiquidacaoQuantidadeValor] - Parte 1 */]]></search>
-      <add position="after">
-        <![CDATA[        var sServicoQuant = obj.data[i].servicoquantidade == "t" ? "true" : "false";
-        var sServico      = obj.data[i].pc01_servico      == "t" ? "true" : "false";]]>
+      <search regex="true" flag="U"><![CDATA[(saida\s*\+=.*<input.*name='vlrtot.*e62_sequen\+"'";)((\n*.*)*)(\)\s*'\s*"\+obj.data\[i\].libera\+">")]]></search>
+      <add>
+        <![CDATA[var sServicoQuant = obj.data[i].servicoquantidade == "t" ? "true" : "false";
+        var sServico      = obj.data[i].pc01_servico      == "t" ? "true" : "false"; 
+        $1 $2); js_verificaQuantidade("+obj.data[i].e62_sequen+", "+sServicoQuant+", "+sServico+"$4]]>
       </add>
     </operation>
 
     <operation>
-      <search><![CDATA[saida += "    <input type='text' style='text-align:right' name='vlrtot"+obj.data[i].e62_sequen+"'";
-        saida += "           id='vlrtot"+obj.data[i].e62_sequen+"'  value='"+obj.data[i].e62_vlrtot+"' "+sDesabilitaValor;
-        saida += "           size='5' class='valores' onkeypress='return js_teclas(event)'";
-        saida += "          onblur='js_calculaValor("+obj.data[i].e62_sequen+",2)' "+obj.data[i].libera+">"
-        saida += "  </td>";]]></search>
-      <add position="replace">
-        <![CDATA[saida += "    <input type='text' style='text-align:right' name='vlrtot"+obj.data[i].e62_sequen+"'";
-        saida += "           id='vlrtot"+obj.data[i].e62_sequen+"'  value='"+obj.data[i].e62_vlrtot+"' "+sDesabilitaValor;
-        saida += "           size='5' class='valores' onkeypress='return js_teclas(event)'";
-        saida += "          onblur='js_calculaValor("+obj.data[i].e62_sequen+",2); js_verificaQuantidade("+obj.data[i].e62_sequen+", "+sServicoQuant+", "+sServico+")' "+obj.data[i].libera+">"
-        saida += "  </td>";]]>
-      </add>
-    </operation>
-
-    <operation>
-      <search><![CDATA[/* Plugin [LiquidacaoQuantidadeValor] - Parte 2 */]]></search>
-      <add position="after">
-        <![CDATA[  function js_verificaQuantidade(sequenItem, ServicoQuantidade, Servico){
+      <search regex="true"><![CDATA[(function\s*js_marcaLinha\(.*\)\s*{)]]></search>
+      <add>
+        <![CDATA[  
+  function js_verificaQuantidade(sequenItem, ServicoQuantidade, Servico){
     var saldo = document.getElementById('saldovlr'+sequenItem).innerHTML;
     var valor = document.getElementById('vlrtot'+sequenItem).value;
     if ((ServicoQuantidade == true || Servico == true) && (parseFloat(valor) != parseFloat(saldo))){
       alert("O item é controlado por quantidade, mas você alterou o valor. Verifique.");
     }
-  }]]>
+  }
+  
+  $1]]>
       </add>
     </operation>
 
